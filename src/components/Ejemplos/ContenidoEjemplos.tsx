@@ -16,7 +16,7 @@ const data = [
     { expresion: "a*b+c?", symbol: '*+?', name: 'Kleene, Positiva y Opcional' },
     { expresion: "a|b*c+", symbol: '|*+', name: 'Or, Kleene y Positiva' },
     { expresion: "ab?|c*", symbol: '?|*', name: 'Opcional, Or y Kleene' },
-    { expresion: "a+b*|c", symbol: '+.*|', name: 'Positiva, Concatenación, Kleene y Or' },
+    { expresion: "a+b*|c", symbol: '+*|', name: 'Positiva, Concatenación, Kleene y Or' },
     { expresion: "1*|2+", symbol: '*|+', name: 'Kleene, Or y Positiva' },
     { expresion: "a?b+c*", symbol: '?+*', name: 'Opcional, Positiva y Kleene' },
     { expresion: "0|12?", symbol: '|.?', name: 'Or, Concatenación y Opcional' },
