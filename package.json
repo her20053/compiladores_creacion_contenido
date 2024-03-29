@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "start-backend": "cd backend && python main.py",
+    "start": "concurrently \"npm run dev\" \"npm run start-backend\"",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -45,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.41.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",

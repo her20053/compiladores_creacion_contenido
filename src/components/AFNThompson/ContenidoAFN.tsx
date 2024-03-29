@@ -29,7 +29,7 @@ export const AFNThompsonComponent: React.FC = () => {
             const formData = new FormData();
             formData.append('user_input', form.values.regex);
 
-            const response = await fetch('http://3.224.178.178:5000/generate', {
+            const response = await fetch('http://127.0.0.1:5000/generate', {
                 method: 'POST',
                 body: formData,
             });
@@ -38,14 +38,15 @@ export const AFNThompsonComponent: React.FC = () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const blob = await response.blob();
-            const url = URL.createObjectURL(blob);
-            setImageUrl(url);
+            const data = await response.json();
+            console.log(data.gifUrl);
+            setImageUrl(`${data.gifUrl}?${new Date().getTime()}`);
+
         } catch (error) {
             console.error("Error fetching the GIF:", error);
             // Mostrar una alerta emergente de error con window.alert()
             window.alert("Hubo un error al generar el GIF. Por favor, verifica la expresión regular.");
-            setImageUrl(ImagenPlaceHolder); // Vuelve a la imagen de placeholder en caso de error
+            setImageUrl(`${ImagenPlaceHolder}?${new Date().getTime()}`); // Vuelve a la imagen de placeholder en caso de error
         }
     };
 

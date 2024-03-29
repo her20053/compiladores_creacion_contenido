@@ -1,0 +1,10 @@
+digraph {
+	graph [rankdir=LR]
+	A -> B [label=e color=blue fontcolor=blue]
+	B -> C [label=e color=blue fontcolor=blue]
+	C -> D [label=e color=blue fontcolor=blue]
+	A [fillcolor=lightyellow fontcolor=black shape=circle style=filled]
+	Inicio [shape=point]
+	Inicio -> A [color=green]
+	D [fillcolor=lightgreen fontcolor=black shape=doublecircle style=filled]
+}
