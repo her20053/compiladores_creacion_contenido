@@ -1,7 +1,7 @@
 digraph {
 	graph [rankdir=LR]
-	0 -> 1 [label=e color=blue fontcolor=blue]
-	1 -> 3 [label=e color=red fontcolor=red]
+	0 -> 1 [label=u color=blue fontcolor=blue]
+	1 -> 3 [label=y color=red fontcolor=red]
 	0 [fillcolor=lightyellow fontcolor=black shape=circle style=filled]
 	Inicio [shape=point]
 	Inicio -> 0 [color=green]

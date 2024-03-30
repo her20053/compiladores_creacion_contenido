@@ -1,6 +1,6 @@
 digraph {
 	graph [rankdir=LR]
-	2 -> 3 [label=e color=red fontcolor=red]
+	2 -> 3 [label=y color=red fontcolor=red]
 	2 [fillcolor=lightyellow fontcolor=black shape=circle style=filled]
 	Inicio [shape=point]
 	Inicio -> 2 [color=green]
