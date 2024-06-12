@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start-backend": "cd backend && python main.py",
-    "start-electron": "node -e \"setTimeout(() => require('child_process').spawn('electron', ['.'], { stdio: 'inherit' }), 2000)\"",
+    "start-electron": "electron .",
     "start": "concurrently \"npm run dev\" \"npm run start-backend\" \"npm run start-electron\"",
     "build": "vite build",
     "preview": "vite preview",
