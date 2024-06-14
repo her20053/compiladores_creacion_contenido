@@ -2,9 +2,13 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const execFile = require('child_process').execFile;
 
+
+
+let backendProcess;
+
 function createWindow() {
     const backend = path.join(__dirname, 'backend', 'dist', 'main');
-    execFile(
+    backendProcess = execFile(
         backend, 
         { 
           windowsHide: true 
@@ -23,11 +27,12 @@ function createWindow() {
       );
 
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+      width: 800,
+      height: 600,
     });
-
+      
     win.loadURL('http://127.0.0.1:5173');
+      
 }
 
 app.whenReady().then(() => {
@@ -40,4 +45,10 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
+});
+
+app.on('before-quit', () => {
+  if (backendProcess) {
+      backendProcess.kill();
+  }
 });
