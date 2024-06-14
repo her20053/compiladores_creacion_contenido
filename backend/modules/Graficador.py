@@ -1,11 +1,17 @@
 import os
+import sys
 import glob
 import graphviz as gv
 
+def get_base_path():
+    if getattr(sys, 'frozen', False): return sys._MEIPASS
+    return os.path.abspath(os.path.dirname(__file__))
+
+base_path = get_base_path()
 
 def graficarAutomataFinitoNoDeterminista(afn, numero_transiciones=0):
     # Crear el directorio si no existe
-    directorio = "AFN_Imagenes"
+    directorio = os.path.join(base_path, "AFN_Imagenes")
     if not os.path.exists(directorio):
         os.makedirs(directorio)
 

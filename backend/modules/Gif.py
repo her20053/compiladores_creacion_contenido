@@ -3,6 +3,13 @@ import imageio
 import json
 import os
 import io
+import sys
+
+def get_base_path():
+    if getattr(sys, 'frozen', False): return sys._MEIPASS
+    return os.path.abspath(os.path.dirname(__file__))
+
+base_path = get_base_path()
 
 def cargar_pasos(ruta_json="orden.json"):
     with open(ruta_json, 'r') as file:
@@ -82,8 +89,8 @@ def crear_gif_desde_imagenes(directorio_imagenes, archivo_salida, duracion_frame
 
 # Uso de la función
 def crear_gif_thompson():
-    directorio = "AFN_Imagenes"
-    archivo_salida = "static/RESULTADO.gif"
+    directorio = os.path.join(base_path, "AFN_Imagenes")
+    archivo_salida = os.path.join(base_path, "static/RESULTADO.gif")
     pasos = cargar_pasos()
     crear_gif_desde_imagenes(directorio, archivo_salida, duracion_frame=0.5, repeticiones=10, pasos=pasos)
 

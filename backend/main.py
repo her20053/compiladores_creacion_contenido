@@ -9,14 +9,21 @@ from modules.Postfix    import convertirAPostfix, formatearExpresionRegular
 
 import os
 import shutil
+import sys
 
 app = Flask(__name__)
 CORS(app)
 app.debug = True
 
+def get_base_path():
+    if getattr(sys, 'frozen', False): return sys._MEIPASS
+    return os.path.abspath(os.path.dirname(__file__))
+
+base_path = get_base_path()
+
 @app.route('/')
 def hello_world():
-    gif_path = "static/RESULTADO.gif"
+    gif_path = os.path.join(base_path, "static/RESULTADO.gif")
     gif_exists = os.path.exists(gif_path)
     return render_template('index.html', gif_exists=gif_exists)
 
@@ -32,12 +39,14 @@ def generate():
 
     # ELIMINANDO EL DIRECTORIO DE IMAGENES SI EXISTE
 
-    directorio = "AFN_Imagenes"
+    directorio = os.path.join(base_path, "AFN_Imagenes")
     if os.path.exists(directorio):
         shutil.rmtree(directorio)
         print(f" - Directorio '{directorio}' eliminado con éxito.")
     else:
         print(f" - El directorio '{directorio}' no existe.")
+
+    os.makedirs(directorio, exist_ok=True)
 
     # CREAMOS EL AUTOMATA FINITO NO DETERMINISTA
 
