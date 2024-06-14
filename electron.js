@@ -1,25 +1,26 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const spawn = require('child_process').spawn;
+const execFile = require('child_process').execFile;
 
 function createWindow() {
-    const python = spawn('gunicorn', ['-w', '4', '-b', '127.0.0.1:5000', 'main:app'], {
-        cwd: path.join(__dirname, 'backend'),
-        env: {
-            ...process.env,
-            PYTHONPATH: process.env.PYTHONPATH
-                ? `${process.env.PYTHONPATH}:${path.join(__dirname, 'backend')}`
-                : path.join(__dirname, 'backend')
+    const backend = path.join(__dirname, 'backend', 'dist', 'main');
+    execFile(
+        backend, 
+        { 
+          windowsHide: true 
+        }, 
+        (err, stdout, stderr) => {
+          if (err) {
+              console.log(err);
+          }
+          if (stdout) {
+              console.log(stdout);
+          }
+          if (stderr) {
+              console.log(stderr);
+          }
         }
-    });
-
-    python.stdout.on('data', function (data) {
-        console.log("data: ", data.toString('utf8'));
-    });
-
-    python.stderr.on('data', function (data) {
-        console.log(`stderr: ${data.toString('utf8')}`);
-    });
+      );
 
     const win = new BrowserWindow({
         width: 800,
