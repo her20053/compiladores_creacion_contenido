@@ -4819,10 +4819,10 @@
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.411.tgz"
   "version" "1.4.411"
 
-"electron@^29.1.6":
-  "integrity" "sha512-UIYfpHR9gRBFKHyejHuXUVQ7nNzZRnoPVOHlijkvqR+DSLwgJ2ZcVVt0LNduNeO8PhPkY1+6kHonL52OTC1cOw=="
-  "resolved" "https://registry.npmjs.org/electron/-/electron-29.1.6.tgz"
-  "version" "29.1.6"
+"electron@^31.0.1":
+  "integrity" "sha512-2eBcp4iqLkTsml6mMq+iqrS5u3kJ/2mpOLP7Mj7lo0uNK3OyfNqRS9z1ArsHjBF2/HV250Te/O9nKrwQRTX/+g=="
+  "resolved" "https://registry.npmjs.org/electron/-/electron-31.0.1.tgz"
+  "version" "31.0.1"
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^20.9.0"

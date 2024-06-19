@@ -29,11 +29,21 @@ function createWindow() {
     const win = new BrowserWindow({
       width: 800,
       height: 600,
+      webPreferences: {
+        nodeIntegration: true,
+      },
     });
-      
-    win.loadURL('http://127.0.0.1:5173');
-      
-}
+
+    
+    const indexPath = path.join(__dirname, 'dist', 'index.html');
+    win.loadFile(indexPath)
+        .then(() => {
+            console.log('File loaded successfully');
+        })
+        .catch((err) => {
+            console.error('Failed to load file:', err);
+        });
+};
 
 app.whenReady().then(() => {
     createWindow();
