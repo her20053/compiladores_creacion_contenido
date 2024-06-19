@@ -36,13 +36,8 @@ function createWindow() {
 
     
     const indexPath = path.join(__dirname, 'dist', 'index.html');
-    win.loadFile(indexPath)
-        .then(() => {
-            console.log('File loaded successfully');
-        })
-        .catch((err) => {
-            console.error('Failed to load file:', err);
-        });
+    win.loadFile(indexPath);
+    
 };
 
 app.whenReady().then(() => {
