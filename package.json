@@ -2,6 +2,8 @@
   "name": "mantine-vite-template",
   "private": true,
   "version": "0.0.0",
+  "description": "App para generar AFNs.",
+  "author": "Estudiantes de la Universidad del Valle de Guatemala",
   "main": "electron.js",
   "scripts": {
     "dev": "vite",
@@ -19,7 +21,8 @@
     "jest:watch": "jest --watch",
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run jest && npm run build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "build:electron": "npm run build && npm run build-electron"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.3.0",
@@ -89,13 +92,17 @@
     },
     "mac": {
       "category": "public.app-category.utilities",
+      "icon": "build/icon.icns",
       "target": [
         "dmg",
         "zip"
       ]
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        "nsis",
+        "zip"
+      ],
       "icon": "build/icon.ico"
     },
     "linux": {
@@ -103,7 +110,8 @@
         "AppImage",
         "deb"
       ],
-      "category": "Utility"
+      "category": "Utility",
+      "icon": "build/icon.png"
     }
   }
 }
