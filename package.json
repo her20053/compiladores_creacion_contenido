@@ -7,6 +7,7 @@
     "dev": "vite",
     "start-backend": "cd backend && python main.py",
     "start-electron": "electron .",
+    "build-electron": "electron-builder",
     "start": "concurrently \"npm run dev\" \"npm run start-backend\" \"npm run start-electron\"",
     "build": "vite build",
     "preview": "vite preview",
@@ -51,6 +52,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.2.2",
     "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
     "eslint": "^8.41.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -73,5 +75,35 @@
     "typescript": "^5.0.4",
     "vite": "^4.3.9",
     "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.uvg.compiladores",
+    "productName": "GeneradorAFN",
+    "files": [
+      "dist/**/*",
+      "electron.js",
+      "backend/**/*"
+    ],
+    "directories": {
+      "output": "release-builds"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    }
   }
 }
