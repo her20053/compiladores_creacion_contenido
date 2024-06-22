@@ -37,6 +37,10 @@ function createWindow() {
     const indexPath = path.join(__dirname, 'dist', 'index.html');
     win.loadFile(indexPath);
 
+    backendProcess.stdout.on('data', (data) => {
+      if (data.toString().includes("Serving Flask app 'main'")) { console.log('Backend is ready') }
+    });
+
 };
 
 app.whenReady().then(() => {
