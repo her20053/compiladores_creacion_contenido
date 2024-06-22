@@ -17,7 +17,6 @@ export const AFNThompsonComponent: React.FC = () => {
 
     useEffect(() => {
         ipcRenderer.on('backend-ready', () => {
-          console.log('Backend is ready');
             setBackendReady(true);
         });
     
