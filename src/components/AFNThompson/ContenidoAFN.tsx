@@ -73,7 +73,6 @@ export const AFNThompsonComponent: React.FC = () => {
         <Center h={1000} bg="var(--mantine-color-gray-light)">
             <Box maw={500} mx="auto">
                 <form onSubmit={handleOnSubmit}>
-                <Group align="center">
                         <TextInput
                             withAsterisk
                             label="Regex"
@@ -81,10 +80,10 @@ export const AFNThompsonComponent: React.FC = () => {
                             style={{ flexGrow: 1 }}
                             {...form.getInputProps('regex')}
                         />
-                        {loadingGif && <Loader size="sm" style={{ marginLeft: '10px' }} />}
-                    </Group>
+                        
 
                     <Group justify="flex-end" mt="md">
+                        {loadingGif && <Loader size="sm" style={{ marginLeft: '10px' }} />}
                         <Button type="submit" disabled={!backendReady} >Submit</Button>
                     </Group>
                 </form>
