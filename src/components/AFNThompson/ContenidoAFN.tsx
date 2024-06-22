@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 const { ipcRenderer } = require('electron');
 
-import { TextInput, Button, Group, Box, Center } from '@mantine/core';
+import { TextInput, Button, Group, Box, Center, Loader } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import { Image } from '@mantine/core';
@@ -14,6 +14,7 @@ import ImagenPlaceHolder from '../../assets/placeholder-image.png';
 export const AFNThompsonComponent: React.FC = () => {
 
     const [backendReady, setBackendReady] = useState<boolean>(false);
+    const [loadingGif, setLoadingGif] = useState<boolean>(false);
 
     useEffect(() => {
         ipcRenderer.on('backend-ready', () => {
@@ -40,6 +41,7 @@ export const AFNThompsonComponent: React.FC = () => {
 
     const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setLoadingGif(true);
         try {
             const formData = new FormData();
             formData.append('user_input', form.values.regex);
@@ -55,6 +57,7 @@ export const AFNThompsonComponent: React.FC = () => {
 
             const data = await response.json();
             console.log(data.gifUrl);
+            setLoadingGif(false);
             setImageUrl(`${data.gifUrl}?${new Date().getTime()}`);
 
         } catch (error) {
@@ -70,12 +73,16 @@ export const AFNThompsonComponent: React.FC = () => {
         <Center h={1000} bg="var(--mantine-color-gray-light)">
             <Box maw={500} mx="auto">
                 <form onSubmit={handleOnSubmit}>
-                    <TextInput
-                        withAsterisk
-                        label="Regex"
-                        placeholder="(a|b)*abb"
-                        {...form.getInputProps('regex')}
-                    />
+                <Group align="center">
+                        <TextInput
+                            withAsterisk
+                            label="Regex"
+                            placeholder="(a|b)*abb"
+                            style={{ flexGrow: 1 }}
+                            {...form.getInputProps('regex')}
+                        />
+                        {loadingGif && <Loader size="sm" style={{ marginLeft: '10px' }} />}
+                    </Group>
 
                     <Group justify="flex-end" mt="md">
                         <Button type="submit" disabled={!backendReady} >Submit</Button>
