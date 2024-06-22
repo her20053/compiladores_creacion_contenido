@@ -31,6 +31,7 @@ function createWindow() {
       height: 600,
       webPreferences: {
         nodeIntegration: true,
+        contextIsolation: false,
       },
     });
 
@@ -38,9 +39,12 @@ function createWindow() {
     win.loadFile(indexPath);
 
     backendProcess.stdout.on('data', (data) => {
-      if (data.toString().includes("Serving Flask app 'main'")) { console.log('Backend is ready') }
+      if (data.toString().includes("Serving Flask app 'main'")) { 
+        win.webContents.send('backend-ready');
+      }
     });
 
+    win.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {

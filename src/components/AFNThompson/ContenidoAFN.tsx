@@ -1,5 +1,6 @@
 // Importa las dependencias necesarias de React y cualquier otra que necesites
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
+const { ipcRenderer } = require('electron');
 
 import { TextInput, Button, Group, Box, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -11,6 +12,21 @@ import ImagenPlaceHolder from '../../assets/placeholder-image.png';
 
 // Define tu componente como una función de flecha
 export const AFNThompsonComponent: React.FC = () => {
+
+    const [backendReady, setBackendReady] = useState<boolean>(false);
+
+    useEffect(() => {
+        ipcRenderer.on('backend-ready', () => {
+          console.log('Backend is ready');
+            setBackendReady(true);
+        });
+    
+        return () => {
+          ipcRenderer.removeAllListeners('backend-ready');
+        };
+      }, []);
+    
+    
     const form = useForm({
         initialValues: {
             regex: '',
@@ -63,7 +79,7 @@ export const AFNThompsonComponent: React.FC = () => {
                     />
 
                     <Group justify="flex-end" mt="md">
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" disabled={!backendReady} >Submit</Button>
                     </Group>
                 </form>
 
