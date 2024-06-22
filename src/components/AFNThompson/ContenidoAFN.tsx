@@ -64,6 +64,7 @@ export const AFNThompsonComponent: React.FC = () => {
             console.error("Error fetching the GIF:", error);
             // Mostrar una alerta emergente de error con window.alert()
             window.alert("Hubo un error al generar el GIF. Por favor, verifica la expresión regular.");
+            setLoadingGif(false);
             setImageUrl(`${ImagenPlaceHolder}?${new Date().getTime()}`); // Vuelve a la imagen de placeholder en caso de error
         }
     };
