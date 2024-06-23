@@ -42,7 +42,6 @@ function createWindow() {
     backendProcess.stdout.on('data', (data) => {
       if (data.toString().includes("Serving Flask app 'main'")) { 
         win.webContents.send('backend-ready');
-        console.log('Backend ready from electron.js');
         isBackendReady = true;
       }
     });
