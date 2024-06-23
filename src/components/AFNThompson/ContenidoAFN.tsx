@@ -1,6 +1,7 @@
 // Importa las dependencias necesarias de React y cualquier otra que necesites
 import React, { useState, useEffect } from 'react';
 const { ipcRenderer } = require('electron');
+import type { IpcRendererEvent } from 'electron';
 
 import { TextInput, Button, Group, Box, Center, Loader } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -17,15 +18,22 @@ export const AFNThompsonComponent: React.FC = () => {
     const [loadingGif, setLoadingGif] = useState<boolean>(false);
 
     useEffect(() => {
-        ipcRenderer.on('backend-ready', () => {
-            setBackendReady(true);
-        });
-    
-        return () => {
-          ipcRenderer.removeAllListeners('backend-ready');
+        const handleBackendReady = () => setBackendReady(true);
+        ipcRenderer.on('backend-ready', handleBackendReady);
+        if (backendReady === false) { ipcRenderer.send('check-backend-status')}
+
+        return () => { ipcRenderer.removeListener('backend-ready', handleBackendReady) };
+    }, [backendReady]);
+
+    useEffect(() => {
+        const handleBackendStatusResponse = (_event: IpcRendererEvent, status: boolean) => {
+            if (status === true) { setBackendReady(true) }
+            else if (status === false) { setBackendReady(false) }
         };
-      }, []);
-    
+
+        ipcRenderer.on('backend-status-response', handleBackendStatusResponse);
+        return () => { ipcRenderer.removeListener('backend-status-response', handleBackendStatusResponse)};
+    }, []);
     
     const form = useForm({
         initialValues: {
