@@ -18,16 +18,24 @@ function createWindow() {
         }, 
         (err, stdout, stderr) => {
           if (err) {
-              console.log(err);
+              console.error(err);
           }
           if (stdout) {
               console.log(stdout);
           }
           if (stderr) {
-              console.log(stderr);
+              console.error(stderr);
           }
         }
       );
+
+    backendProcess.on('error', (error) => {
+        console.error('Backend process error:', error);
+    });
+
+    backendProcess.on('exit', (code, signal) => {
+        console.log(`Backend process exited with code ${code} and signal ${signal}`);
+    });
 
     const win = new BrowserWindow({
       width: 800,
@@ -56,22 +64,39 @@ function createWindow() {
       }
     });
   
-};
+}
 
-app.whenReady().then(() => {
-    createWindow();
+const gotTheLock = app.requestSingleInstanceLock();
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+if (!gotTheLock) {
+    app.quit();
+} else {
+    app.whenReady().then(() => {
+        createWindow();
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
     });
-});
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
-});
+    app.on('window-all-closed', () => {
+        if (backendProcess) {
+            backendProcess.kill();
+        }
+        if (process.platform !== 'darwin') app.quit();
+    });
 
-app.on('before-quit', () => {
-  if (backendProcess) {
-      backendProcess.kill();
-  }
-});
+    app.on('before-quit', () => {
+        if (backendProcess) {
+            backendProcess.kill();
+        }
+    });
+
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        const win = BrowserWindow.getAllWindows()[0];
+        if (win) {
+            if (win.isMinimized()) win.restore();
+            win.focus();
+        }
+    });
+}
