@@ -9,10 +9,12 @@ let isBackendReady = false;
 
 function createWindow() {
     const backend = path.join(__dirname, 'backend', 'dist', 'main');
+    const env = Object.assign({}, process.env, { PATH: `/opt/homebrew/bin:${process.env.PATH}` });
     backendProcess = execFile(
         backend, 
         { 
-          windowsHide: true 
+          windowsHide: true,
+          env: env
         }, 
         (err, stdout, stderr) => {
           if (err) {

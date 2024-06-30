@@ -1,6 +1,7 @@
 import string
 import os
 import json
+import tempfile
 from modules.Graficador import graficarAutomataFinitoNoDeterminista
 
 
@@ -77,6 +78,10 @@ class Thompson:
         self.expresion = expresion
 
         self.cantidadEstadosGenerados = 0
+
+
+        self.writable_dir = tempfile.gettempdir()
+        self.orden_json_path = os.path.join(self.writable_dir, 'orden.json')
 
         self.generarAutomataFinitoNoDeterminista()
 
@@ -485,8 +490,8 @@ class Thompson:
     def generarAutomataFinitoNoDeterminista(self):
 
         # Borramos el archivo "orden.json" si existe
-        if os.path.exists("orden.json"):
-            os.remove("orden.json")
+        if os.path.exists(self.orden_json_path):
+            os.remove(self.orden_json_path)
 
         # Inicializamos una lista para guardar el orden de las operaciones
         orden_operaciones = []
@@ -575,7 +580,7 @@ class Thompson:
             graficarAutomataFinitoNoDeterminista(stack[-1], numero_transiciones_usadas)
 
         # Al finalizar el bucle, guardamos el orden de las operaciones en "orden.json"
-        with open("orden.json", "w") as file:
+        with open(self.orden_json_path, "w") as file:
             json.dump({"Orden": orden_operaciones}, file)
         # Retornamos el AFN final
 

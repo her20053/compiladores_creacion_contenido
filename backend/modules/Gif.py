@@ -4,6 +4,7 @@ import json
 import os
 import io
 import sys
+import tempfile
 
 def get_base_path():
     if getattr(sys, 'frozen', False): return sys._MEIPASS
@@ -12,6 +13,9 @@ def get_base_path():
 base_path = get_base_path()
 
 def cargar_pasos(ruta_json="orden.json"):
+    writable_dir = tempfile.gettempdir()
+    ruta_json = os.path.join(writable_dir, ruta_json)
+    
     with open(ruta_json, 'r') as file:
         data = json.load(file)
     return data['Orden']
