@@ -18,13 +18,13 @@ function createWindow() {
         }, 
         (err, stdout, stderr) => {
           if (err) {
-              console.error(err);
+              console.log(err);
           }
           if (stdout) {
               console.log(stdout);
           }
           if (stderr) {
-              console.error(stderr);
+              console.log(stderr);
           }
         }
       );
