@@ -38,5 +38,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: electron-and-flask-build
-          paths:
-            - release-builds/*.exe
+          path: release-builds/*.exe  # Specify path as a string, not an array
