@@ -16,21 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Specify your Node.js version
+      # Set up Node.js and Python steps here...
 
-      - name: Install Node.js dependencies
-        run: npm install
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'  # Specify your Python version
-
-      - name: Install Python dependencies for Flask backend
+      - name: Install dependencies
         run: |
+          npm install
           pip install -r backend/requirements.txt
 
       - name: Build Flask backend with PyInstaller
@@ -45,5 +35,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: electron-and-flask-build
-          paths:
-            - release-builds/*.exe
+          path: release-builds/*.exe
