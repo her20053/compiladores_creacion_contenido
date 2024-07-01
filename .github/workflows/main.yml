@@ -1,0 +1,43 @@
+name: Electron and Flask Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Flask backend with PyInstaller
+        run: |
+          cd backend
+          pyinstaller --onefile --add-data "templates;templates" --add-data "static;static" --add-data "orden.json:." --add-data "../AFN_Imagenes;AFN_Imagenes" --hidden-import flask_cors main.py
+
+      - name: Build Electron app for Windows
+        run: |
+          cd ..
+          npm run build:electron -- --win
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: electron-and-flask-build
+          paths:
+            - release-builds/*.exe
+            - backend/dist/main.exe   # Adjust the path to match the output of pyinstaller
