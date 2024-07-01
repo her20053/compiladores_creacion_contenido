@@ -40,4 +40,3 @@ jobs:
           name: electron-and-flask-build
           paths:
             - release-builds/*.exe
-            - backend/dist/main.exe   # Adjust the path to match the output of pyinstaller
