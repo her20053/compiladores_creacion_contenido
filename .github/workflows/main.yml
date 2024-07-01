@@ -22,10 +22,11 @@ jobs:
         run: |
           npm install
           pip install -r backend/requirements.txt
+          pip install pyinstaller  # Install pyinstaller
 
       - name: Build Flask backend with PyInstaller
         run: |
-          pyinstaller --onefile --add-data "backend/templates;templates" --add-data "backend/static;static" --add-data "backend/orden.json:." --add-data "AFN_Imagenes;AFN_Imagenes" --hidden-import flask_cors backend/main.py
+          pyinstaller --onefile --add-data "backend/templates;templates" --add-data "backend/static;static" --add-data "backend/orden.json:." --add-data "backend/AFN_Imagenes;AFN_Imagenes" --hidden-import flask_cors backend/main.py
 
       - name: Build Electron app for Windows
         run: |
@@ -35,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: electron-and-flask-build
-          path: release-builds/*.exe
+          path: release-builds/*.exe  # Ensure paths is specified as a string, not an array
