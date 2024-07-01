@@ -36,4 +36,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: electron-and-flask-build
-          path: release-builds/*.exe  # Ensure paths is specified as a string, not an array
+          path: release-builds/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GitHub token
