@@ -6,6 +6,7 @@ const execFile = require('child_process').execFile;
 
 let backendProcess;
 let isBackendReady = false;
+let win;
 
 function createWindow() {
     const backendPath = process.env.NODE_ENV === 'development'
@@ -40,7 +41,7 @@ function createWindow() {
         console.log(`Backend process exited with code ${code} and signal ${signal}`);
     });
 
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
       width: 800,
       height: 600,
       webPreferences: {
@@ -66,6 +67,16 @@ function createWindow() {
           event.sender.send('backend-status-response', false);
       }
     });
+
+    win.on('closed', () => {
+        win = null;
+    });
+
+    win.on('close', () => {
+        if (backendProcess) {
+            backendProcess.kill('SIGTERM');
+        }
+    });
 };
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -83,19 +94,24 @@ if (!gotTheLock) {
 
     app.on('window-all-closed', () => {
         if (backendProcess) {
-            backendProcess.kill();
+            backendProcess.kill('SIGTERM');
         }
         if (process.platform !== 'darwin') app.quit();
     });
 
     app.on('before-quit', () => {
         if (backendProcess) {
-            backendProcess.kill();
+            backendProcess.kill('SIGTERM');
+        }
+    });
+
+    app.on('will-quit', () => {
+        if (backendProcess) {
+            backendProcess.kill('SIGTERM');
         }
     });
 
     app.on('second-instance', (event, commandLine, workingDirectory) => {
-        const win = BrowserWindow.getAllWindows()[0];
         if (win) {
             if (win.isMinimized()) win.restore();
             win.focus();
