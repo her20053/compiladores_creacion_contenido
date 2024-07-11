@@ -1,5 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const execFile = require('child_process').execFile;
 
 
@@ -8,23 +8,28 @@ let backendProcess;
 let isBackendReady = false;
 
 function createWindow() {
-    const backend = path.join(__dirname, 'backend', 'dist', 'main');
+    const backendPath = process.env.NODE_ENV === 'development'
+        ? path.join(__dirname, 'backend', 'dist', 'main.exe')
+        : path.join(process.resourcesPath, 'backend', 'dist', 'main.exe');
+
+    console.log(`Backend path: ${backendPath}`);
+
     const env = Object.assign({}, process.env, { PATH: `/opt/homebrew/bin:${process.env.PATH}` });
     backendProcess = execFile(
-        backend, 
+        backendPath, 
         { 
           windowsHide: true,
           env: env
         }, 
         (err, stdout, stderr) => {
           if (err) {
-              console.log(err);
+              console.log(`Error executing file: ${err}`);
           }
           if (stdout) {
-              console.log(stdout);
+              console.log(`STDOUT: ${stdout}`);
           }
           if (stderr) {
-              console.log(stderr);
+              console.log(`STDERR: ${stderr}`);
           }
         }
       );

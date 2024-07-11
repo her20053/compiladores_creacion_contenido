@@ -87,6 +87,12 @@
       "app.js",
       "backend/**/*"
     ],
+    "extraResources": [
+      {
+        "from": "backend/dist/main.exe",
+        "to": "backend/dist/main.exe"
+      }
+    ],
     "directories": {
       "output": "release-builds"
     },
