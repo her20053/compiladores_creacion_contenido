@@ -7,11 +7,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "vite",
-    "start": "electron app.js",
-    "start-backend": "cd backend && python main.py",
-    "start-electron": "electron .",
-    "build-electron": "electron-builder",
+    "start": "cross-env NODE_ENV=development electron app.js",
     "build": "vite build",
+    "build-electron": "cross-env NODE_ENV=production electron-builder",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src",
@@ -21,8 +19,7 @@
     "jest:watch": "jest --watch",
     "test": "npm run typecheck && npm run prettier && npm run lint && npm run jest && npm run build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build",
-    "build:electron": "npm run build && npm run build-electron"
+    "storybook:build": "storybook build"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.3.0",
@@ -54,6 +51,7 @@
     "@typescript-eslint/parser": "^5.59.7",
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "electron": "^31.0.1",
     "electron-builder": "^24.13.3",
     "eslint": "^8.41.0",
