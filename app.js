@@ -12,8 +12,6 @@ function createWindow() {
         ? path.join(__dirname, 'backend', 'dist', 'main.exe')
         : path.join(process.resourcesPath, 'backend', 'dist', 'main.exe');
 
-    console.log(`Backend path: ${backendPath} - ${process.env.NODE_ENV}`);
-
     const env = Object.assign({}, process.env, { PATH: `/opt/homebrew/bin:${process.env.PATH}` });
     backendProcess = execFile(
         backendPath, 
