@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "description": "App para generar AFNs.",
   "author": "Estudiantes de la Universidad del Valle de Guatemala",
-  "main": "electron.js",
+  "main": "app.js",
   "scripts": {
     "dev": "vite",
+    "start": "electron app.js",
     "start-backend": "cd backend && python main.py",
     "start-electron": "electron .",
     "build-electron": "electron-builder",
-    "start": "concurrently \"npm run dev\" \"npm run start-backend\" \"npm run start-electron\"",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -84,7 +84,7 @@
     "productName": "GeneradorAFN",
     "files": [
       "dist/**/*",
-      "electron.js",
+      "app.js",
       "backend/**/*"
     ],
     "directories": {

@@ -63,6 +63,9 @@ function createWindow() {
           event.sender.send('backend-status-response', false);
       }
     });
+
+    // Open the DevTools.
+    win.webContents.openDevTools();
   
 }
 
